@@ -9,6 +9,7 @@ const fantasy = require("../route/fantasy");
 const war = require("../route/war");
 const scienceFiction = require("../route/science_fiction");
 const cartoons = require("../route/cartoons");
+const searchMovie = require("../route//searchEngine");
 const mongoose = require("mongoose");
 const configs = require("../config/config");
 const bodyParser = require("body-parser");
@@ -71,6 +72,7 @@ app.use("/fantasy_movies", fantasy);
 app.use("/war_movies", war);
 app.use("/science_fiction_movies", scienceFiction);
 app.use("/cartoons", cartoons);
+app.use(searchMovie);
 //
 
 const handler = serverless(app);
