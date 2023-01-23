@@ -38,7 +38,27 @@ route.get("/search", async (req, res) => {
       console.log(`Error accuried: ${err}`);
     } else {
       await db
-        .collection("popular_movies")
+        .collection("action_movies")
+        .find({})
+        .toArray(async function (err, result) {
+          if (err) {
+            res.send(err);
+          } else {
+            miniSearch.addAll(result);
+          }
+        });
+      await db
+        .collection("cartoon_movies")
+        .find({})
+        .toArray(async function (err, result) {
+          if (err) {
+            res.send(err);
+          } else {
+            miniSearch.addAll(result);
+          }
+        });
+      await db
+        .collection("fantasy_movies")
         .find({})
         .toArray(async function (err, result) {
           if (err) {
@@ -58,7 +78,27 @@ route.get("/search", async (req, res) => {
           }
         });
       await db
-        .collection("action_movies")
+        .collection("popular_movies")
+        .find({})
+        .toArray(async (err, result) => {
+          if (err) {
+            res.send(err);
+          } else {
+            miniSearch.addAll(result);
+          }
+        });
+      await db
+        .collection("science_fiction_movies")
+        .find({})
+        .toArray(async (err, result) => {
+          if (err) {
+            res.send(err);
+          } else {
+            miniSearch.addAll(result);
+          }
+        });
+      await db
+        .collection("trending_movies")
         .find({})
         .toArray(async (err, result) => {
           if (err) {
