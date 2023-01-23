@@ -2,7 +2,7 @@
 
 const express = require("express");
 const mongoose = require("mongoose");
-const config = require("../config/config");
+const config = require("../../config/config");
 const route = express.Router();
 const assert = require("assert");
 const axios = require("axios");
@@ -13,7 +13,7 @@ route.get("/get_all", (req, res) => {
       console.log(`Error accuried: ${err}`);
     } else {
       await db
-        .collection("popular_movies")
+        .collection("trending_movies")
         .find({})
         .toArray(function (err, result) {
           if (err) {
@@ -44,7 +44,7 @@ function getDataToObject(movieObj) {
   };
 }
 
-async function getPopularMovies(res) {
+async function getTrendingMovies(res) {
   let data = res.data.results;
   for (const movie of data) {
     const objToMoveMD = getDataToObject(movie);
@@ -52,7 +52,7 @@ async function getPopularMovies(res) {
       if (err) {
         console.log(`Error accuried: ${err}`);
       } else {
-        const database = db.collection("popular_movies");
+        const database = db.collection("trending_movies");
         try {
           await database.insertOne(objToMoveMD);
         } catch (e) {
@@ -61,15 +61,16 @@ async function getPopularMovies(res) {
       }
     });
   }
+  
 }
 route.post("/train_db", async (req, res) => {
-  const { page } = req.body;
+  const { page = 0 } = req.body;
   const API_KEY = "a06703a3a956c84f212f678361ef4431";
   const DOMAIN_URL = "https://api.themoviedb.org";
-  const POPULAR_MOVIES = `${DOMAIN_URL}/3/movie/popular?api_key=${API_KEY}&page=${page}`;
-  const popularMovies = await axios.get(POPULAR_MOVIES);
+  const TRENDING_MOVIES = `${DOMAIN_URL}/3/trending/all/day?api_key=${API_KEY}&page=${page}`;
+  const trending_movies = await axios.get(TRENDING_MOVIES);
 
-  await getPopularMovies(popularMovies);
+  await getTrendingMovies(trending_movies);
 
   res.send(`Database with page ${page} successfully inserted`);
 });

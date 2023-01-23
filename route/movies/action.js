@@ -2,7 +2,7 @@
 
 const express = require("express");
 const mongoose = require("mongoose");
-const config = require("../config/config");
+const config = require("../../config/config");
 const route = express.Router();
 const assert = require("assert");
 const axios = require("axios");
@@ -13,7 +13,7 @@ route.get("/get_all", (req, res) => {
       console.log(`Error accuried: ${err}`);
     } else {
       await db
-        .collection("war_movies")
+        .collection("action_movies")
         .find({})
         .toArray(function (err, result) {
           if (err) {
@@ -44,7 +44,7 @@ function getDataToObject(movieObj) {
   };
 }
 
-async function getWarMovies(res) {
+async function getActionMovies(res) {
   let data = res.data.results;
   for (const movie of data) {
     const objToMoveMD = getDataToObject(movie);
@@ -52,7 +52,7 @@ async function getWarMovies(res) {
       if (err) {
         console.log(`Error accuried: ${err}`);
       } else {
-        const database = db.collection("war_movies");
+        const database = db.collection("action_movies");
         try {
           await database.insertOne(objToMoveMD);
         } catch (e) {
@@ -66,9 +66,9 @@ route.post("/train_db", async (req, res) => {
   const { page } = req.body;
   const API_KEY = "a06703a3a956c84f212f678361ef4431";
   const DOMAIN_URL = "https://api.themoviedb.org";
-  const ACTION_MOVIES = `${DOMAIN_URL}/3/discover/movie?api_key=${API_KEY}&language=en-US&page=${page}&with_genres=10752`;
+  const ACTION_MOVIES = `${DOMAIN_URL}/3/discover/movie?api_key=${API_KEY}&language=en-US&page=${page}&with_genres=28`;
   const popularMovies = await axios.get(ACTION_MOVIES);
-  await getWarMovies(popularMovies);
+  await getActionMovies(popularMovies);
 
   res.send(`Database with page ${page} successfully inserted`);
 });
