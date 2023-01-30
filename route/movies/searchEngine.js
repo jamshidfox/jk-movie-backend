@@ -112,6 +112,16 @@ route.get("/search", async (req, res) => {
             }
           });
         await db
+          .collection("horror_movies")
+          .find({})
+          .toArray(async (err, result) => {
+            if (err) {
+              res.send(err);
+            } else {
+              miniSearch.addAll(result);
+            }
+          });
+        await db
           .collection("war_movies")
           .find({})
           .toArray(async (err, result) => {

@@ -30,6 +30,7 @@ function getDataToObject(movieObj) {
   const IMDB = "https://image.tmdb.org/t/p/w500";
   const title = movieObj.original_title;
   const backdropPath = IMDB + movieObj.backdrop_path;
+  const posterPath = IMDB + movieObj.poster_path;
   const overview = movieObj.overview;
   const releaseDate = movieObj.release_date;
   const voteAverage = movieObj.vote_average;
@@ -41,6 +42,7 @@ function getDataToObject(movieObj) {
     releaseDate,
     voteAverage,
     movie_id,
+    posterPath,
   };
 }
 
@@ -61,7 +63,6 @@ async function getTrendingMovies(res) {
       }
     });
   }
-  
 }
 route.post("/train_db", async (req, res) => {
   const { page = 0 } = req.body;

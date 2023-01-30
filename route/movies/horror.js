@@ -30,6 +30,7 @@ function getDataToObject(movieObj) {
   const IMDB = "https://image.tmdb.org/t/p/w500";
   const title = movieObj.original_title;
   const backdropPath = IMDB + movieObj.backdrop_path;
+  const posterPath = IMDB + movieObj.poster_path;
   const overview = movieObj.overview;
   const releaseDate = movieObj.release_date;
   const voteAverage = movieObj.vote_average;
@@ -41,12 +42,13 @@ function getDataToObject(movieObj) {
     releaseDate,
     voteAverage,
     movie_id,
+    posterPath,
   };
 }
 
 async function getHorrorMovies(res) {
   let data = res.data.results;
-  console.log(data)
+  console.log(data);
   for (const movie of data) {
     const objToMoveMD = getDataToObject(movie);
     mongoose.connect(config.mongoDB, async (err, db) => {
