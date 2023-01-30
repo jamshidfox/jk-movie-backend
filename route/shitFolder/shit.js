@@ -6,7 +6,7 @@ const config = require("../../config/config");
 const route = express.Router();
 const axios = require("axios");
 
-const movie_type = "cartoon_movies";
+const movie_type = "horror_movies";
 
 async function shit(data) {
   try {
