@@ -9,6 +9,7 @@ const fantasy = require("../route/movies/fantasy");
 const war = require("../route/movies/war");
 const scienceFiction = require("../route/movies/science_fiction");
 const cartoons = require("../route/movies/cartoons");
+const horror_movies = require("../route/movies/horror");
 const searchMovie = require("../route/movies/searchEngine");
 const mongoose = require("mongoose");
 const configs = require("../config/config");
@@ -66,6 +67,7 @@ app.use("/fantasy_movies", fantasy);
 app.use("/war_movies", war);
 app.use("/science_fiction_movies", scienceFiction);
 app.use("/cartoons", cartoons);
+app.use("/horror_movies", horror_movies);
 app.use(searchMovie);
 //
 
